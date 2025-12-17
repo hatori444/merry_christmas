@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>merry christmas</title>
+  <style>
+    body {
+      background: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: monospace;
+      color: white;
+      overflow: hidden;
+    }
+
+    .text {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .tree {
+      font-size: 18px;
+      line-height: 1.2;
+      white-space: pre;
+      color: lime;
+      display: none;
+    }
+
+    .bottom-text {
+      margin-top: 15px;
+      font-size: 20px;
+      display: none;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: lime;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .lamp {
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    /* ❄️ SALJU */
+    .snow {
+      position: fixed;
+      top: -10px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, white 50%, transparent 50%),
+        radial-gradient(2px 2px at 80px 120px, white 50%, transparent 50%),
+        radial-gradient(2px 2px at 150px 60px, white 50%, transparent 50%),
+        radial-gradient(2px 2px at 220px 180px, white 50%, transparent 50%);
+      animation: snow 8s linear infinite;
+    }
+
+    @keyframes snow {
+      to { transform: translateY(100vh); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ❄️ SALJU -->
+<div class="snow"></div>
+
+<!-- 🔤 TULISAN ATAS -->
+<div class="text">🎄 Merry Christmas 🎄</div>
+
+<!-- 🎄 POHON -->
+<div class="tree" id="tree"></div>
+
+<!-- 🔤 TULISAN BAWAH -->
+<div class="bottom-text" id="bottomText">
+  yey pohon natal maaf yh cmn bs segini
+</div>
+
+<!-- 🔘 BUTTON -->
+<button id="showBtn">Tampilkan Pohon</button>
+
+<!-- 🔔 MUSIK -->
+<audio id="jingle" src="jingle.mp3"></audio>
+
+<script>
+  const treeShape = [
+    "         ★",
+    "       *****",
+    "      *******",
+    "     *********",
+    "    ***********",
+    "        |||",
+    "        |||"
+  ];
+
+  const colors = ["red", "yellow", "cyan", "pink", "lime"];
+
+  function randColor() {
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  function generateTree() {
+    let html = "";
+    treeShape.forEach(line => {
+      for (let char of line) {
+        if (char === "*" && Math.random() < 0.25) {
+          html += `<span class="lamp" style="color:${randColor()}">●</span>`;
+        } else {
+          html += char;
+        }
+      }
+      html += "\n";
+    });
+    document.getElementById("tree").innerHTML = html;
+  }
+
+  const btn = document.getElementById("showBtn");
+
+  btn.addEventListener("click", () => {
+    document.getElementById("tree").style.display = "block";
+    document.getElementById("bottomText").style.display = "block";
+    document.getElementById("jingle").play();
+    generateTree();
+    setInterval(generateTree, 700);
+    btn.style.display = "none";
+  });
+</script>
+
+</body>
+  </html>
